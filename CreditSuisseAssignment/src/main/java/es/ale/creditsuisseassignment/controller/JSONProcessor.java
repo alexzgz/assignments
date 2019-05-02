@@ -73,15 +73,16 @@ public class JSONProcessor {
 	    } catch (IOException ex) {
 	    }
 	    
+	    // We wait until every "futured" task finishes
 		CompletableFuture.allOf(listInsertedEvents.toArray(new CompletableFuture[0]))
         // avoid throwing an exception in the join() call
         .exceptionally(ex -> null)
         .join();
 
 	    
-		
+		// Printing the final result in the log, if needed
 		List<Event> listado = eventService.getEvent();
-		listado.forEach(System.out::println);
+		listado.forEach((event) -> {log.debug(event.toString());});
 
 		
 		
